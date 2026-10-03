@@ -7,6 +7,11 @@ on:
 jobs:
   build:
     runs-on: windows-2022
+    env:
+      # Baked into the frontend bundles at build time; also the Sentry release name below.
+      SENTRY_RELEASE: ${{ github.sha }}
+      # Exposed here so the release step's `if` can check whether Sentry is configured.
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -28,6 +33,7 @@ jobs:
       - name: Typecheck frontend apps
         run: pnpm -r typecheck
 
+      # Generates hidden source maps and injects debug IDs into the bundles and maps.
       - name: Build frontend apps
         run: pnpm -r build
 
@@ -46,3 +52,16 @@ jobs:
           name: sentry-playground-web
           path: artifacts/web
           if-no-files-found: error
+
+      # Runs only if every step above succeeded. Skipped when Sentry isn't configured
+      # (no token) and on anything but a push to main (i.e. a merge).
+      - name: Create Sentry release and upload frontend source maps
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && env.SENTRY_AUTH_TOKEN != ''
+        uses: getsentry/action-release@v3
+        env:
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_FRONTEND_PROJECT }}
+        with:
+          release: ${{ github.sha }}
+          sourcemaps: SentryPlayground.Web/static
+          set_commits: skip
