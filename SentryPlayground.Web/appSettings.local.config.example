@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copy to appSettings.local.config (git-ignored) and fill in DSNs from your own Sentry project. -->
+<appSettings>
+  <add key="Sentry.Environment" value="local" />
+  <add key="Sentry.Backend.Dsn" value="" />
+  <add key="Sentry.AppOne.Dsn" value="" />
+  <add key="Sentry.AppTwo.Dsn" value="" />
+</appSettings>

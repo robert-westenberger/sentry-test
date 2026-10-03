@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net481</TargetFramework>
+    <OutputType>Library</OutputType>
+    <AssemblyName>SentryPlayground.Web</AssemblyName>
+    <RootNamespace>SentryPlayground</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <!-- Classic ASP.NET loads assemblies from <site>\bin, so build straight into it. -->
+    <OutputPath>bin\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Extensions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Sentry.AspNet" Version="6.12.0" />
+    <!-- Lets `dotnet build` work without the .NET Framework 4.8.1 Developer Pack installed. -->
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Pages, static assets and config are served as-is, not compiled. -->
+  <ItemGroup>
+    <Content Include="*.aspx;*.ashx;Global.asax;Web.config;appSettings.local.config.example;static\**" />
+  </ItemGroup>
+
+</Project>

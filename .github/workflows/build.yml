@@ -1,0 +1,48 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.300
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.16.0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.14.3
+
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck frontend apps
+        run: pnpm -r typecheck
+
+      - name: Build frontend apps
+        run: pnpm -r build
+
+      - name: Restore backend
+        run: dotnet restore SentryPlayground.Web/SentryPlayground.Web.csproj
+
+      - name: Build backend
+        run: dotnet build SentryPlayground.Web/SentryPlayground.Web.csproj -c Release --no-restore
+
+      - name: Stage web output
+        run: ./scripts/stage-web.ps1
+        shell: pwsh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sentry-playground-web
+          path: artifacts/web
+          if-no-files-found: error
