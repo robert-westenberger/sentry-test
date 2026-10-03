@@ -25,6 +25,8 @@ scripts/                  stage-web.ps1, start-iisexpress.ps1
 
 ## Build
 
+One command that installs and builds everything: `pnpm build:all` (or `.scriptsbuild-all.ps1`). The individual steps:
+
 From the repo root:
 
 ```powershell

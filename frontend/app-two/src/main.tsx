@@ -12,6 +12,8 @@ const config = window.__SENTRY_CONFIG__ ?? {};
 
 Sentry.init({
   dsn: config.dsn || undefined,
+  // Events go through the backend tunnel instead of straight to Sentry.
+  tunnel: "tunnel.ashx",
   environment: config.environment || undefined,
   // @sentry/react v11 replaced sendDefaultPii with dataCollection; turn everything off explicitly.
   dataCollection: { userInfo: false, cookies: false, httpHeaders: false, httpBodies: [], urlQueryParams: false },

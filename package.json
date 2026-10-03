@@ -2,5 +2,6 @@
   "name": "sentry-playground",
   "private": true,
   "packageManager": "pnpm@9.14.3",
+  "scripts": { "build:all": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-all.ps1" },
   "engines": { "node": ">=22" }
 }
