@@ -10,7 +10,7 @@
   <h1>App One</h1>
   <p><a href="app-two.aspx">Go to app-two</a> | <a href="TestErrorHandler.ashx">Backend test error</a></p>
   <div id="root"></div>
-  <%= SentryPlayground.AppConfig.FrontendConfigScript("AppOne") %>
+  <%= SentryPlayground.AppConfig.FrontendConfigScript() %>
   <script src="static/app-one/app.js"></script>
 </body>
 </html>

@@ -3,6 +3,5 @@
 <appSettings>
   <add key="Sentry.Environment" value="local" />
   <add key="Sentry.Backend.Dsn" value="" />
-  <add key="Sentry.AppOne.Dsn" value="" />
-  <add key="Sentry.AppTwo.Dsn" value="" />
+  <add key="Sentry.Frontend.Dsn" value="" />
 </appSettings>

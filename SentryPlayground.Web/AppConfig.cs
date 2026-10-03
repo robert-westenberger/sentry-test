@@ -11,12 +11,12 @@ namespace SentryPlayground
             return string.IsNullOrWhiteSpace(value) ? null : value.Trim();
         }
 
-        /// <summary>Inline script defining window.__SENTRY_CONFIG__ for one frontend app.</summary>
-        public static string FrontendConfigScript(string appKey)
+        /// <summary>Inline script defining window.__SENTRY_CONFIG__ (both frontend apps share one DSN).</summary>
+        public static string FrontendConfigScript()
         {
             var json = new JavaScriptSerializer().Serialize(new
             {
-                dsn = Get("Sentry." + appKey + ".Dsn"),
+                dsn = Get("Sentry.Frontend.Dsn"),
                 environment = Get("Sentry.Environment")
             });
             // Keep the JSON inert inside a <script> element.

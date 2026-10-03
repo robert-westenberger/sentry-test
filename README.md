@@ -58,9 +58,9 @@ With no DSNs, everything builds and runs and Sentry stays disabled. To enable it
 | --- | --- |
 | `Sentry.Environment` | backend and both frontends |
 | `Sentry.Backend.Dsn` | .NET SDK (`Global.asax`) |
-| `Sentry.AppOne.Dsn` / `Sentry.AppTwo.Dsn` | React apps (written into the page as `window.__SENTRY_CONFIG__`) |
+| `Sentry.Frontend.Dsn` | both React apps share one Sentry project (written into the page as `window.__SENTRY_CONFIG__`) |
 
-Restart the site after changing it. Events are tagged `app=backend`, `app=app-one`, `app=app-two`. Default PII collection is off; no Sentry auth token is used.
+Restart the site after changing it. Events are tagged `app=backend`, `app=app-one`, `app=app-two` (filter or group by the `app` tag in Sentry). Default PII collection is off; no Sentry auth token is used.
 
 ## Verifying error capture
 
