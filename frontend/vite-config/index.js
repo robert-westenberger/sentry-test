@@ -17,11 +17,15 @@ export function createViteConfig({ name, globalName, url }) {
   return defineConfig({
     root: dirname,
     plugins: [react()],
-    define: { "process.env.NODE_ENV": JSON.stringify("production") },
+    define: {
+      "process.env.NODE_ENV": JSON.stringify("production"),
+      // Set by CI so events carry the same release the source maps are uploaded under.
+      __SENTRY_RELEASE__: JSON.stringify(process.env.SENTRY_RELEASE || null),
+    },
     build: {
       outDir: resolve(dirname, "../../SentryPlayground.Web/static", name),
       emptyOutDir: true,
-      sourcemap: true,
+      sourcemap: "hidden", // maps are generated but not referenced from the bundle
       cssCodeSplit: false,
       lib: {
         entry: "src/main.tsx",
