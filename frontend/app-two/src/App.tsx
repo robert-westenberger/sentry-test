@@ -9,7 +9,7 @@ export function App() {
   if (broken) return <Thrower />;
   return (
     <div>
-      <h2>Hello World from app-two</h2>
+      <h2>Hello World from app-two (pipeline test)</h2>
       <button onClick={() => setBroken(true)}>Throw test error</button>
     </div>
   );
